@@ -1,33 +1,35 @@
+
 class BankAccount {
-    constructor(accountNumber, owner, transactions) {
+    constructor(accountNumber, owner, Transactions) {
         this.accountNumber = accountNumber;
         this.owner = owner;
-        this.transactions = [];
+        this.Transactions = [];
     }
     balance() {
-        const initial = 0;
-        const total = this.transactions.reduce((starting, next) => starting + next, initial)
+        const total = this.Transactions.reduce((starting, next) => 
+        starting + next.amt, 0)
         return total;
-
     }
     deposit(amt) {
         if(amt > 0){ //make sure deposits are not negative
             let deposit = new Transaction(amt, this.owner);
-            this.transactions.push(deposit);
+            this.Transactions.push(deposit);
         }
     }
-    charge(payee, amt) {
-        if(this.balance() > 0) { //only apply charges if the balance is > 0
+    charge(amt, payee) {
+       if(this.balance() > amt) { //only apply charges if the balance is > amt
             let charge = new Transaction(-1*amt, payee); //multiply by -1 to subtract charges
-            this.transactions.push(charge);
+            this.Transactions.push(charge);
         }
     }
+    
 }
 
 class Transaction {
     constructor(amt, payee) {
         this.amt = amt;
         this.payee = payee;
-        let today = new Date();
+        this.date = new Date();
     }
 }
+
